@@ -8,19 +8,17 @@ const Content = () => {
 
   useEffect(()=>{
     let localData = JSON.parse(localStorage.getItem("todos"))
-    if(localData.length !== 0 ){
+    if(!!localData && localData.length !== 0 ){
         setTodos(localData);
     }
-    else{
-        setTodos([{name:"Alışverişe git", do:false},{name:"Köpeği gezdir", do:false}])
-        localStorage.setItem("todos",JSON.stringify(todos));
-    }
   },[])
+  useEffect(()=>{
+      localStorage.setItem("todos",JSON.stringify(todos));
+  },[todos])
 
   const handleInput = () => {
     if (!!todoInput) {
       setTodos([...todos, { name: todoInput.trim(), do: false }]);
-      localStorage.setItem("todos",JSON.stringify([...todos, { name: todoInput.trim(), do: false }]));
     }
     setTodoInput("");
   };
@@ -28,13 +26,11 @@ const Content = () => {
   const handleUpdate = (index) => {
     let newData = [...todos];
     newData[index].do = !newData[index].do;
-    localStorage.setItem("todos",JSON.stringify(newData));
     return newData;
   };
 
   const handleDelete = () => {
     let filtredData = todos.filter((data) => data.do !== true);
-    localStorage.setItem("todos",JSON.stringify(filtredData));
     setTodos(filtredData);
   };
 
