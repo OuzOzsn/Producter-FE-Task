@@ -1,0 +1,13 @@
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.header-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+.header-container h1 {
+  text-shadow: 4px 4px 7px;
+}
