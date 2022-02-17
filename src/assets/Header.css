@@ -10,4 +10,5 @@
 }
 .header-container h1 {
   text-shadow: 4px 4px 7px;
+  user-select: none;
 }

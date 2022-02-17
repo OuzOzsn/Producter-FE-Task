@@ -1,30 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Button } from "react-bootstrap";
 import { BsCheckLg } from "react-icons/bs";
 
 const Content = () => {
   const [todoInput, setTodoInput] = useState("");
-  const [todos, setTodos] = useState([
-    { name: "Köpeği Gezdir", do: true },
-    { name: "Ders Çalış", do: false },
-  ]);
+  const [todos, setTodos] = useState([]);
+
+  useEffect(()=>{
+    let localData = JSON.parse(localStorage.getItem("todos"))
+    if(localData.length !== 0 ){
+        setTodos(localData);
+    }
+    else{
+        setTodos([{name:"Alışverişe git", do:false},{name:"Köpeği gezdir", do:false}])
+        localStorage.setItem("todos",JSON.stringify(todos));
+    }
+  },[])
 
   const handleInput = () => {
     if (!!todoInput) {
       setTodos([...todos, { name: todoInput.trim(), do: false }]);
+      localStorage.setItem("todos",JSON.stringify([...todos, { name: todoInput.trim(), do: false }]));
     }
-    console.log(todos);
     setTodoInput("");
   };
 
   const handleUpdate = (index) => {
     let newData = [...todos];
     newData[index].do = !newData[index].do;
+    localStorage.setItem("todos",JSON.stringify(newData));
     return newData;
   };
 
   const handleDelete = () => {
     let filtredData = todos.filter((data) => data.do !== true);
+    localStorage.setItem("todos",JSON.stringify(filtredData));
     setTodos(filtredData);
   };
 
